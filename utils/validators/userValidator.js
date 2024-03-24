@@ -59,3 +59,28 @@ exports.updateUserValidator = [
     }),
   validatorMiddleware
 ];
+
+exports.changePasswordValidator = [
+  check('currentPassword')
+    .notEmpty()
+    .withMessage('Please enter your current password.'),
+  check('newPassword')
+    .isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 })
+    .withMessage('Password must have a minimum length of 8 characters, with at least one lowercase letter, one uppercase letter, one number, and one special character.'),
+  check('confirmPassword')
+    .notEmpty()
+    .withMessage('Please confirm your password.')
+    .bail()
+    .custom(async (val, { req }) => {
+      if (req.body.newPassword !== val) {
+        throw new Error('Passwords don\'t match.');
+      }
+      const user = await User.findById(req.user._id);
+      const isCorrectPassword = await bcrypt.compare(req.body.currentPassword, user.password);
+      if (!isCorrectPassword) {
+        throw new Error('Incorrect current password.');
+      }
+      return true;
+    }),
+  validatorMiddleware
+];

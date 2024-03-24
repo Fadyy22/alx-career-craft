@@ -54,3 +54,14 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
   res.status(204).send();
 });
+
+exports.changePassword = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.user._id, {
+    password: await bcrypt.hash(req.body.newPassword, 12),
+    passwordChangedAt: Date.now()
+  }, { new: true });
+
+  const token = createToken(user._id);
+
+  res.status(200).json({ user: user, token: token });
+});

@@ -25,4 +25,6 @@ router
   .route('/:id')
   .get(getUserProfileValidator, getUserProfile);
 
+router.put('/changePassword', isAuth, changePasswordValidator, changePassword);
+
 module.exports = router;
