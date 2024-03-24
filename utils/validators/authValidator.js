@@ -70,3 +70,10 @@ exports.forgotPasswordValidator = [
     .withMessage('Please enter a valid email.'),
   validatorMiddleware
 ];
+
+exports.verifyPasswordResetCodeValidator = [
+  check('resetCode', 'Invalid or expired password reset code.')
+    .isNumeric()
+    .isLength({ min: 6, max: 6 }),
+  validatorMiddleware
+];
