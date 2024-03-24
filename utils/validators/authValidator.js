@@ -77,3 +77,22 @@ exports.verifyPasswordResetCodeValidator = [
     .isLength({ min: 6, max: 6 }),
   validatorMiddleware
 ];
+
+exports.resetPasswordValidator = [
+  check('email')
+    .isEmail()
+    .withMessage('Please enter a valid email.'),
+  check('password')
+    .isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 })
+    .withMessage('Password must have a minimum length of 8 characters, with at least one lowercase letter, one uppercase letter, one number, and one special character.'),
+  check('confirmPassword')
+    .notEmpty()
+    .withMessage('Please confirm your password.')
+    .custom((val, { req }) => {
+      if (req.body.password !== val) {
+        throw new Error('Passwords don\'t match.');
+      }
+      return true;
+    }),
+  validatorMiddleware
+];
