@@ -1,6 +1,7 @@
 const { check } = require('express-validator');
 
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
+const Job = require('../../models/jobModel');
 
 exports.createJobValidator = [
   check('jobTitle')
@@ -90,5 +91,23 @@ exports.updateJobValidator = [
     .optional()
     .isArray({ min: 1 })
     .withMessage('Please enter at least one soft skill'),
+  validatorMiddleware,
+];
+
+exports.deleteJobValidator = [
+  check('id')
+    .isMongoId()
+    .withMessage('Invalid job id format.')
+    .bail()
+    .custom(async (id, { req }) => {
+      const job = await Job.findById(id);
+      if (!job) {
+        return Promise.reject(new Error('Job not found.'));
+      }
+
+      if (job.addedBy.toString() !== req.user._id.toString()) {
+        return Promise.reject(new Error('Not authorized to delete this job.'));
+      }
+    }),
   validatorMiddleware,
 ];

@@ -15,3 +15,9 @@ exports.updateJob = asyncHandler(async (req, res) => {
 
   res.status(200).json({ job });
 });
+
+exports.deleteJob = asyncHandler(async (req, res) => {
+  await Job.findByIdAndDelete(req.params.id);
+
+  res.status(204).json();
+});
