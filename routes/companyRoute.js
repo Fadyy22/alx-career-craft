@@ -5,6 +5,8 @@ const {
   updateCompany,
   deleteCompany,
   getCompany,
+  getCompanies,
+  createFilterObj,
 } = require('../controllers/companyController');
 
 const {
@@ -21,7 +23,8 @@ router
   .route('/')
   .post(isAuth, allowedTo('HR'), createCompanyValidator, createCompany)
   .put(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany)
-  .delete(isAuth, allowedTo('HR'), deleteCompany);
+  .delete(isAuth, allowedTo('HR'), deleteCompany)
+  .get(createFilterObj, getCompanies);
 
 router
   .route('/:id')

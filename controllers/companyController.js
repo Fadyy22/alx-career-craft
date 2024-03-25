@@ -3,6 +3,15 @@ const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/apiError');
 const Company = require('../models/companyModel');
 
+exports.createFilterObj = asyncHandler(async (req, res, next) => {
+  let filterObj = {};
+  if (req.query.name) {
+    filterObj = { companyName: { $regex: req.query.name, $options: 'i' } };
+  }
+  req.filterObj = filterObj;
+  next();
+});
+
 exports.createCompany = asyncHandler(async (req, res) => {
   req.body.companyHR = req.user._id;
 
@@ -40,4 +49,10 @@ exports.getCompany = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({ company });
+});
+
+exports.getCompanies = asyncHandler(async (req, res, next) => {
+  const companies = await Company.find(req.filterObj);
+
+  res.status(200).json({ companies });
 });
