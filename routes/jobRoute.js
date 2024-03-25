@@ -3,11 +3,15 @@ const express = require('express');
 const {
   createJob,
   updateJob,
+  deleteJob,
+  getAllJobs,
+  createFilterObj,
 } = require('../controllers/jobController');
 
 const {
   createJobValidator,
   updateJobValidator,
+  deleteJobValidator,
 } = require('../utils/validators/jobValidator');
 
 
@@ -18,6 +22,7 @@ const router = express.Router();
 
 router
   .route('/')
+  .get(createFilterObj, getAllJobs)
   .post(isAuth, allowedTo('HR'), createJobValidator, createJob);
 
 router
