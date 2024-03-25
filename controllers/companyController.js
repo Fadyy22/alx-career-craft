@@ -23,3 +23,12 @@ exports.updateCompany = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ company: updatedCompany });
 });
+
+exports.deleteCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.findOneAndDelete({ companyHR: req.user._id });
+  if (!company) {
+    return next(new ApiError('Company not found.', 404));
+  }
+
+  res.status(204).json();
+});

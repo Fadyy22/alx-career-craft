@@ -3,6 +3,7 @@ const express = require('express');
 const {
   createCompany,
   updateCompany,
+  deleteCompany,
 } = require('../controllers/companyController');
 
 const {
@@ -18,6 +19,7 @@ const router = express.Router();
 router
   .route('/')
   .post(isAuth, allowedTo('HR'), createCompanyValidator, createCompany)
-  .put(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany);
+  .put(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany)
+  .delete(isAuth, allowedTo('HR'), deleteCompany);
 
 module.exports = router;
