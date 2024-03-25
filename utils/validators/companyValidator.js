@@ -49,3 +49,71 @@ exports.createCompanyValidator = [
     .withMessage('Please enter a valid email.'),
   validatorMiddleware
 ];
+
+exports.updateCompanyValidator = [
+  check('companyName')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company name.')
+    .isLength({ max: 16 })
+    .withMessage('The name you provided is too long.')
+    .bail()
+    .custom(async (val, { req }) => {
+      const company = await Company.findOne({ companyName: val });
+      if (company && company.companyHR.toString() !== req.user._id.toString()) {
+        throw new Error('Company already exists.');
+      }
+      return true;
+    }),
+  check('description')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company description.')
+    .isLength({ max: 200 })
+    .withMessage('The description you provided is too long.'),
+  check('industry')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company industry.'),
+  check('address')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company address.'),
+  check('numberOfEmployees.min')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company minimum number of employees.')
+    .isNumeric()
+    .bail()
+    .custom(async (val, { req }) => {
+      const company = await Company.findOne({ companyHR: req.user._id });
+      req.company = company;
+      if (val >= company.numberOfEmployees.max) {
+        if (req.body.numberOfEmployees.max && req.body.numberOfEmployees.max >= val) {
+          return true;
+        }
+        throw new Error('Minimum number of employees must be less than maximum.');
+      }
+    }),
+  check('numberOfEmployees.max')
+    .optional()
+    .notEmpty()
+    .withMessage('Please enter your company maximum number of employees.')
+    .isNumeric()
+    .bail()
+    .custom(async (val, { req }) => {
+      const company = await Company.findOne({ companyHR: req.user._id });
+      req.company = company;
+      if (val <= company.numberOfEmployees.min) {
+        if (req.body.numberOfEmployees.min && req.body.numberOfEmployees.min <= val) {
+          return true;
+        }
+        throw new Error('Maximum number of employees must be greater than minimum.');
+      }
+    }),
+  check('companyEmail')
+    .optional()
+    .isEmail()
+    .withMessage('Please enter a valid email.'),
+  validatorMiddleware
+];
