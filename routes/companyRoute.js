@@ -25,6 +25,6 @@ router
 
 router
   .route('/:id')
-  .get(isAuth, allowedTo('HR'), getCompany);
+  .get(getCompany);
 
 module.exports = router;
