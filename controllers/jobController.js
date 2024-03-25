@@ -8,3 +8,10 @@ exports.createJob = asyncHandler(async (req, res) => {
 
   res.status(201).json({ job });
 });
+
+exports.updateJob = asyncHandler(async (req, res) => {
+  req.body.addedBy = req.user._id;
+  const job = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+  res.status(200).json({ job });
+});
