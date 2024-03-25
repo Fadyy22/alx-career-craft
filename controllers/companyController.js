@@ -32,3 +32,12 @@ exports.deleteCompany = asyncHandler(async (req, res, next) => {
 
   res.status(204).json();
 });
+
+exports.getCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.findById(req.params.id).populate('jobs');
+  if (!company) {
+    return next(new ApiError('Company not found.', 404));
+  }
+
+  res.status(200).json({ company });
+});

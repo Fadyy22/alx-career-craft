@@ -4,6 +4,7 @@ const {
   createCompany,
   updateCompany,
   deleteCompany,
+  getCompany,
 } = require('../controllers/companyController');
 
 const {
@@ -21,5 +22,9 @@ router
   .post(isAuth, allowedTo('HR'), createCompanyValidator, createCompany)
   .put(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany)
   .delete(isAuth, allowedTo('HR'), deleteCompany);
+
+router
+  .route('/:id')
+  .get(isAuth, allowedTo('HR'), getCompany);
 
 module.exports = router;
