@@ -14,11 +14,14 @@ const {
   deleteJobValidator,
 } = require('../utils/validators/jobValidator');
 
+const applicationRoute = require('./applicationRoute');
 
 const isAuth = require('../middlewares/authMiddleware');
 const allowedTo = require('../middlewares/allowedToMiddleware');
 
 const router = express.Router();
+
+router.use('/:id/apply', applicationRoute);
 
 router
   .route('/')
