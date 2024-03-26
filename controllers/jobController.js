@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 
+const ApiError = require('../utils/apiError');
 const ApiFeatures = require('../utils/apiFeatures');
 const Company = require('../models/companyModel');
 const Job = require('../models/jobModel');
@@ -14,8 +15,12 @@ exports.createFilterObj = asyncHandler(async (req, res, next) => {
   next();
 });
 
-exports.createJob = asyncHandler(async (req, res) => {
+exports.createJob = asyncHandler(async (req, res, next) => {
   req.body.addedBy = req.user._id;
+  const company = await Company.findOne({ companyHR: req.user._id });
+  if (!company) {
+    return next(new ApiError('You have to create a company first', 400));
+  }
   const job = await Job.create(req.body);
 
   res.status(201).json({ job });
