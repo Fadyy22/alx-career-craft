@@ -47,8 +47,8 @@ exports.signupValidator = [
   check('role')
     .notEmpty()
     .withMessage('Please enter your role.')
-    .isIn(['user', 'hr'])
-    .withMessage('Role must be either user or hr.'),
+    .isIn(['USER', 'HR'])
+    .withMessage('Role must be either USER or HR.'),
   validatorMiddleware,
 ];
 
