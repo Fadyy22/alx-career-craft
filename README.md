@@ -33,6 +33,8 @@
      - [Get all Jobs by Company](#get-all-jobs-by-company)
    - [Application](#application)
      - [Create Application](#create-application)
+     - [Get all Applications for a Job](#get-all-applications-for-a-job)
+     - [Download All Applications for a Job in Excel](#download-all-applications-for-a-job-in-excel)
 
 ## Getting Started
 
@@ -67,11 +69,6 @@
     EMAIL_PORT=
     EMAIL_USER=
     EMAIL_PASSWORD=
-
-    # CLOUDINARY
-    CLOUDINARY_CLOUD_NAME=
-    CLOUDINARY_API_KEY=
-    CLOUDINARY_API_SECRET=
    ```
 
 5. Start the server
@@ -498,3 +495,25 @@
   "application": Application Object
 }
 ```
+
+#### Get all Applications for a Job
+
+- **URL:** `/jobs/:id/applications`
+- **Method:** `GET`
+- **Request Headers:** `Authorization`: Bearer {JWT Token}
+
+- **Response:**
+
+```json
+{
+  "applications": [Application Object]
+}
+```
+
+#### Download All Applications for a Job in Excel
+
+- **URL:** `/jobs/:id/applications/download`
+- **Method:** `GET`
+- **Request Headers:** `Authorization`: Bearer {JWT Token}
+
+- **Response:** Excel file download
