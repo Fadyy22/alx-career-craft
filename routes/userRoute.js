@@ -4,11 +4,14 @@ const {
   getUser,
   getUserProfile,
   updateUser,
+  deleteUser,
+  changePassword,
 } = require('../controllers/userController');
 
 const {
   getUserProfileValidator,
   updateUserValidator,
+  changePasswordValidator,
 } = require('../utils/validators/userValidator');
 
 const isAuth = require('../middlewares/authMiddleware');
