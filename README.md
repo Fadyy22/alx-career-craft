@@ -45,9 +45,9 @@
 ### Installation
 
 1. Clone the repo
-   `git clone https://github.com/Fadyy22/job-search-api.git`
+   `git clone https://github.com/Fadyy22/alx-career-craft.git`
 2. Navigate to the project directory
-   `cd job-search-api`
+   `cd alx-career-craft`
 3. Install dependencies
    `npm install`
 4. Create a `.env` file in the root directory and add the following environment variables:
