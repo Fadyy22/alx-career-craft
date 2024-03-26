@@ -21,7 +21,7 @@ const allowedTo = require('../middlewares/allowedToMiddleware');
 
 const router = express.Router();
 
-router.use('/:id/apply', applicationRoute);
+router.use(['/:id/apply', '/:id/applications'], applicationRoute);
 
 router
   .route('/')
