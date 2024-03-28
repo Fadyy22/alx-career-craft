@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const ApiError = require('../utils/apiError');
 const createToken = require('../utils/createToken');
+const sendEmail = require('../utils/sendEmail');
 const User = require('../models/userModel');
 
 exports.signup = asyncHandler(async (req, res) => {
@@ -75,7 +76,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ status: 'Success', message: 'Reset code sent to email.' });
+    .json({ message: 'Reset code sent to email.' });
 });
 
 exports.verifyPasswordResetCode = asyncHandler(async (req, res, next) => {
