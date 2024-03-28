@@ -47,7 +47,7 @@ exports.getAllApplications = asyncHandler(async (req, res) => {
   }
   const applications = await Application.find({ jobId: job._id }).populate({
     path: 'userId',
-    select: '-username -password -role -createdAt -updatedAt',
+    select: 'firstName lastName DOB email mobileNumber',
   });
   res.status(200).json({ applications });
 });
