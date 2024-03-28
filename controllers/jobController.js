@@ -9,7 +9,11 @@ exports.createFilterObj = asyncHandler(async (req, res, next) => {
   let filterObj = {};
   if (req.query.company) {
     const company = await Company.findOne({ companyName: { $regex: req.query.company, $options: 'i' } });
-    filterObj = { addedBy: company.companyHR };
+    if (company) {
+      filterObj = { addedBy: company.companyHR };
+    } else {
+      filterObj = { addedBy: undefined };
+    }
   }
   req.filterObj = filterObj;
   next();
