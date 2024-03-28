@@ -26,7 +26,6 @@ exports.login = asyncHandler(async (req, res, next) => {
     $or: [{ email: req.body.username }, { mobileNumber: req.body.username }]
   }).select('-password -passwordResetCode -passwordResetExpires -passwordResetVerified');
 
-
   if (!user || !(await bcrypt.compare(req.body.password, user.password)))
     return next(new ApiError('Invalid credentials.', 401));
 
