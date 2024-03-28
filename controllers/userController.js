@@ -4,7 +4,8 @@ const ApiError = require('../utils/apiError');
 const User = require('../models/userModel');
 
 exports.getUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id)
+    .select('-password -passwordResetCode -passwordResetExpires -passwordResetVerified');
 
   res.status(200).json({ user: user });
 });
