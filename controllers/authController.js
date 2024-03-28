@@ -24,7 +24,8 @@ exports.signup = asyncHandler(async (req, res) => {
 exports.login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({
     $or: [{ email: req.body.username }, { mobileNumber: req.body.username }]
-  });
+  }).select('-password -passwordResetCode -passwordResetExpires -passwordResetVerified');
+
 
   if (!user || !(await bcrypt.compare(req.body.password, user.password)))
     return next(new ApiError('Invalid credentials.', 401));
@@ -34,7 +35,6 @@ exports.login = asyncHandler(async (req, res, next) => {
   user.status = "online";
   await user.save();
 
-  delete user._doc.password;
   res.status(200).json({
     user: user, token: token
   });
