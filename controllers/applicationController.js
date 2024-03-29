@@ -32,12 +32,18 @@ exports.uploadResume = (req, res, next) => {
   }
 };
 
-exports.applyJob = asyncHandler(async (req, res) => {
+exports.applyJob = asyncHandler(async (req, res, next) => {
   req.body.jobId = req.params.id;
   req.body.userId = req.user._id;
 
-  const application = await Application.create(req.body);
-  res.status(201).json({ application });
+  const application = await Application.find({
+    userId: req.body.userId, jobId: req.params.id
+  });
+  if (application) {
+    return next(new ApiError('You have applied for this job before', 400));
+  }
+  const newApplication = await Application.create(req.body);
+  res.status(201).json({ application: newApplication });
 });
 
 exports.getAllApplications = asyncHandler(async (req, res) => {
