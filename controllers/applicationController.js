@@ -36,7 +36,7 @@ exports.applyJob = asyncHandler(async (req, res, next) => {
   req.body.jobId = req.params.id;
   req.body.userId = req.user._id;
 
-  const application = await Application.find({
+  const application = await Application.findOne({
     userId: req.body.userId, jobId: req.params.id
   });
   if (application) {
