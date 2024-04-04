@@ -46,8 +46,11 @@ exports.applyJob = asyncHandler(async (req, res, next) => {
   res.status(201).json({ application: newApplication });
 });
 
-exports.getAllApplications = asyncHandler(async (req, res) => {
+exports.getAllApplications = asyncHandler(async (req, res, next) => {
   const job = await Job.findById(req.params.id);
+  if (!job) {
+    return next(new ApiError('Job doesn\'t exist', 404));
+  }
   if (job.addedBy.toString() !== req.user._id.toString()) {
     return next(new ApiError('Unauthorized', 403));
   }
