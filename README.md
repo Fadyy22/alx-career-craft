@@ -176,7 +176,7 @@
 #### Reset Password
 
 - **URL:** `/auth/resetPassword`
-- **Method:** `PUT`
+- **Method:** `PATCH`
 - **Request Body:**
 
 ```json
@@ -225,7 +225,7 @@
 #### Update User
 
 - **URL:** `/users`
-- **Method:** `PUT`
+- **Method:** `PATCH`
 - **Request Headers:** `Authorization`: Bearer {JWT Token}
 - **Request Body:**
 
@@ -259,7 +259,7 @@
 #### Change Password
 
 - **URL:** `/users/changePassword`
-- **Method:** `PUT`
+- **Method:** `PATCH`
 - **Request Headers:** `Authorization`: Bearer {JWT Token}
 - **Request Body:**
 
@@ -314,7 +314,7 @@
 #### Update Company
 
 - **URL:** `/company`
-- **Method:** `PUT`
+- **Method:** `PATCH`
 - **Request Headers:** `Authorization`: Bearer {JWT Token}
 - **Request Body:**
 
@@ -418,7 +418,7 @@
 #### Update Job
 
 - **URL:** `/jobs/:id`
-- **Method:** `PUT`
+- **Method:** `PATCH`
 - **Request Headers:** `Authorization`: Bearer {JWT Token}
 - **Request Body:**
 

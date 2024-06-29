@@ -21,7 +21,7 @@ const router = express.Router();
 router
   .route('/')
   .get(isAuth, getUser)
-  .put(isAuth, updateUserValidator, updateUser)
+  .patch(isAuth, updateUserValidator, updateUser)
   .delete(isAuth, deleteUser);
 
 router

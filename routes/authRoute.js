@@ -24,6 +24,6 @@ router.post('/signup', rateLimit, signupValidator, signup);
 router.post('/login', rateLimit, loginValidator, login);
 router.post('/forgotPassword', rateLimit, forgotPasswordValidator, forgotPassword);
 router.post('/verifyResetCode', rateLimit, verifyPasswordResetCodeValidator, verifyPasswordResetCode);
-router.put('/resetPassword', resetPasswordValidator, resetPassword);
+router.patch('/resetPassword', resetPasswordValidator, resetPassword);
 
 module.exports = router;

@@ -22,7 +22,7 @@ const router = express.Router();
 router
   .route('/')
   .post(isAuth, allowedTo('HR'), createCompanyValidator, createCompany)
-  .put(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany)
+  .patch(isAuth, allowedTo('HR'), updateCompanyValidator, updateCompany)
   .delete(isAuth, allowedTo('HR'), deleteCompany)
   .get(createFilterObj, getCompanies);
 

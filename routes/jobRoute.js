@@ -30,7 +30,7 @@ router
 
 router
   .route('/:id')
-  .put(isAuth, allowedTo('HR'), updateJobValidator, updateJob)
+  .patch(isAuth, allowedTo('HR'), updateJobValidator, updateJob)
   .delete(isAuth, allowedTo('HR'), deleteJobValidator, deleteJob);
 
 module.exports = router;
